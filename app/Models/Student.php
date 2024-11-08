@@ -2,27 +2,25 @@
 
 namespace App\Models;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Teacher extends Authenticatable
+use Illuminate\Database\Eloquent\Model;
+
+class Student extends Model
 {
     use Notifiable, SoftDeletes;
 
     protected $fillable = [
+        'role',
         'family_name',
         'given_name',
-        'email_company',
-        'phone_company',
-        'email_private',
-        'phone_private',
+        'email',
         'birth_date',
-        'hire_date',
-        'retirement_date',
+        'admission_date',
+        'withdrawal_date',
         'status',
         'password',
-        'role',
     ];
 
     protected $hidden = [
@@ -33,6 +31,11 @@ class Teacher extends Authenticatable
     // 認証に使用するカラム名を指定
     public function getAuthIdentifierName()
     {
-        return 'email_company';
+        return 'email';
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
     }
 }

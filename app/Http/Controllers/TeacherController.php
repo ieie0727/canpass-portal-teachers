@@ -93,6 +93,6 @@ class TeacherController extends Controller
         $teacher = Teacher::findOrFail($id);
         $teacher->delete();
 
-        return redirect()->route('teachers.index')->with('success', '講師を削除しました。');
+        return redirect()->route('teachers.index')->with('success', '講師情報を削除しました。');
     }
 }

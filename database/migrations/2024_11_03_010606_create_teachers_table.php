@@ -18,14 +18,14 @@ class CreateTeachersTable extends Migration
             $table->enum('role', ['teacher', 'admin'])->default('teacher');
             $table->string('family_name');
             $table->string('given_name');
-            $table->string('email_company', 255);
+            $table->string('email_company', 255)->unique();
             $table->string('phone_company', 20)->nullable();
             $table->string('email_private', 255)->nullable();
             $table->string('phone_private', 20)->nullable();
             $table->date('birth_date');
             $table->date('hire_date');
             $table->date('retirement_date')->nullable()->default(null);
-            $table->enum('status', ['稼働', '休職', '退職'])->default('稼働');
+            $table->enum('status', ['稼働', '休職', '退職'])->default('稼働')->index();
             $table->string('meeting_url', 255)->nullable();
             $table->string('password', 255);
             $table->timestamps();
