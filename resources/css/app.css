@@ -1,3 +1,33 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+.text-purple {
+  color: purple;
+}
+
+.text-orange {
+  color: orange;
+}
+
+.table-header-english {
+  background-color: #ffcccc;
+}
+
+/* 薄い赤 */
+.table-header-math {
+  background-color: #cce5ff;
+}
+
+/* 薄い青 */
+.table-header-japanese {
+  background-color: #d4edda;
+}
+
+/* 薄い緑 */
+.table-header-social {
+  background-color: #e2d6f8;
+}
+
+/* 薄い紫 */
+.table-header-science {
+  background-color: #ffe5b4;
+}
+
+/* 薄いオレンジ */

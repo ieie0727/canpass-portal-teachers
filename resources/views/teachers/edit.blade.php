@@ -18,6 +18,7 @@
     @csrf
     @method('PUT')
 
+    @can('isAdmin')
     <div class="mb-3">
       <label for="family_name" class="form-label">名字</label>
       <input type="text" class="form-control @error('family_name') is-invalid @enderror" id="family_name"
@@ -67,6 +68,7 @@
       <div class="invalid-feedback">{{ $message }}</div>
       @enderror
     </div>
+    @endcan
 
     <div class="mb-3">
       <label for="phone_company" class="form-label">会社電話番号</label>
@@ -132,8 +134,8 @@
     </div>
 
     <div class="d-flex mt-4">
-      <button type="submit" class="btn btn-primary me-2">保存</button>
-      <a href="{{ route('teachers.index') }}" class="btn btn-secondary">キャンセル</a>
+      <a href="{{ route('teachers.index') }}" class="btn btn-secondary  me-2">キャンセル</a>
+      <button type="submit" class="btn btn-primary">保存</button>
     </div>
   </form>
 </div>

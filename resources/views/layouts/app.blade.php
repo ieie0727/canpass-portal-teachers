@@ -26,7 +26,6 @@
     <main class="container my-4">
         @yield('content')
     </main>
-    </div>
 </body>
 
 </html>
