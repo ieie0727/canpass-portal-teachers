@@ -55,9 +55,9 @@
     <div class="mb-3">
       <label for="status" class="form-label">ステータス</label>
       <select class="form-select @error('status') is-invalid @enderror" id="status" name="status" required>
-        <option value="active" {{ old('status')=='active' ? 'selected' : '' }}>稼働</option>
-        <option value="on_leave" {{ old('status')=='on_leave' ? 'selected' : '' }}>休職</option>
-        <option value="retired" {{ old('status')=='retired' ? 'selected' : '' }}>退職</option>
+        <option value="稼働" {{ old('status')=='稼働' ? 'selected' : '' }}>稼働</option>
+        <option value="休職" {{ old('status')=='休職' ? 'selected' : '' }}>休職</option>
+        <option value="退職" {{ old('status')=='退職' ? 'selected' : '' }}>退職</option>
       </select>
       @error('status')
       <div class="invalid-feedback">
@@ -154,7 +154,7 @@
       @enderror
     </div>
 
-    <!-- パスワードフィールドの追加 -->
+    <!-- パスワードフィールド -->
     <div class="mb-3">
       <label for="password" class="form-label">パスワード</label>
       <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password"
@@ -178,8 +178,8 @@
     </div>
 
     <div class="d-flex mt-4">
-      <button type="submit" class="btn btn-primary me-2">追加</button>
-      <a href="{{ route('teachers.index') }}" class="btn btn-secondary">キャンセル</a>
+      <a href="{{ route('teachers.index') }}" class="btn btn-secondary me-3">キャンセル</a>
+      <button type="submit" class="btn btn-primary">追加</button>
     </div>
   </form>
 </div>

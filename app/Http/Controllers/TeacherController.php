@@ -12,7 +12,7 @@ class TeacherController extends Controller
     public function index()
     {
         $teachers = Teacher::all();
-        return view('teachers.index', compact('teachers'));
+        return view('teachers.index', compact('teachers'))->with('success', session('success'));
     }
 
     /** 新規作成画面 */

@@ -23,7 +23,7 @@ Route::get('/', [HomeController::class, 'index'])->middleware('auth');
 |--------------------------------------------------------------------------
 */
 Route::controller(TeacherController::class)
-    ->middleware('auth')
+    ->middleware(['auth', 'can:isAdmin'])
     ->prefix('teachers')
     ->name('teachers.')
     ->group(function () {

@@ -134,7 +134,7 @@
     </div>
 
     <div class="d-flex mt-4">
-      <a href="{{ route('teachers.index') }}" class="btn btn-secondary  me-2">キャンセル</a>
+      <a href="{{ route('teachers.index') }}" class="btn btn-secondary  me-3">キャンセル</a>
       <button type="submit" class="btn btn-primary">保存</button>
     </div>
   </form>

@@ -54,10 +54,18 @@
       </tr>
     </tbody>
   </table>
-  <div class="mt-3">
-    <a href="{{ route('teachers.index') }}" class="btn btn-secondary me-2">戻る</a>
-    <a href="{{ route('teachers.edit', $teacher->id) }}" class="btn btn-primary">編集</a>
-  </div>
 
+  <div class="d-flex justify-content-between mt-3">
+    <div>
+      <a href="{{ route('teachers.index') }}" class="btn btn-secondary me-3">戻る</a>
+      <a href="{{ route('teachers.edit', $teacher->id) }}" class="btn btn-primary">編集</a>
+    </div>
+    <form action="{{ route('teachers.destroy', $teacher->id) }}" method="POST"
+      onsubmit="return confirm('この講師を削除しますか？');">
+      @csrf
+      @method('DELETE')
+      <button type="submit" class="btn btn-danger">削除</button>
+    </form>
+  </div>
 </div>
 @endsection

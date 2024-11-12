@@ -55,7 +55,7 @@ class QuestionController extends Controller
         ]);
 
         return to_route('questions.index', ['sectionId' => $sectionId])
-            ->with('success', '新しい質問が追加されました');
+            ->with('success', '新しい問題が追加されました');
     }
 
     /** 詳細表示 */
@@ -113,7 +113,7 @@ class QuestionController extends Controller
         ]);
 
         return to_route('questions.show', ['sectionId' => $sectionId, 'id' => $question->id])
-            ->with('success', '質問が更新されました');
+            ->with('success', '問題が更新されました');
     }
 
     /** 削除 */
@@ -129,6 +129,6 @@ class QuestionController extends Controller
         $question->delete();
 
         return to_route('sections.show', $sectionId)
-            ->with('success', '質問が削除されました');
+            ->with('success', '問題が削除されました');
     }
 }

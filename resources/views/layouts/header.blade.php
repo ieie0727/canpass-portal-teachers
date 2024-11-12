@@ -17,14 +17,14 @@
         <!-- 各リンク -->
         @can('isAdmin')
         <li class="nav-item">
-          <a class="nav-link text-white" href="{{ route('teachers.index') }}">講師検索</a>
+          <a class="nav-link text-white" href="{{ route('teachers.index') }}">講師情報</a>
         </li>
         @endcan
         <li class="nav-item">
-          <a class="nav-link text-white" href="{{ route('students.index') }}">生徒検索</a>
+          <a class="nav-link text-white" href="{{ route('students.index') }}">生徒情報</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" href="{{ route('sections.home') }}">問題管理</a>
+          <a class="nav-link text-white" href="{{ route('sections.home') }}">学習管理</a>
         </li>
 
         <!-- ユーザー情報 -->

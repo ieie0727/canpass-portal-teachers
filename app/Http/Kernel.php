@@ -51,5 +51,6 @@ class Kernel extends HttpKernel
     'csrf' => \App\Http\Middleware\VerifyCsrfToken::class,
     'throttle' => \App\Http\Middleware\ThrottleRequests::class,
     'redirectIfAuthenticated' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+    'admin' => \App\Http\Middleware\AdminMiddleware::class,
   ];
 }
