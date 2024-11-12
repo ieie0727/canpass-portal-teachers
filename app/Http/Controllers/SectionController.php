@@ -3,22 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Laravel\Ui\Presets\React;
-use Illuminate\Support\Facades\Hash;
 use App\Models\Section;
 use App\Models\Question;
 
 class SectionController extends Controller
 {
-    /** 初期動作 */
-    public function __construct() {}
+    /** @var array 教科のリスト */
+    private $subjects;
 
-    /** */
+    /** 初期動作 */
+    public function __construct()
+    {
+        $this->subjects = ['英語', '数学', '国語', '理科', '社会'];
+    }
+
+    /** ホーム画面 */
     public function home()
     {
         return view('sections.home');
     }
-
 
     /** 一覧 */
     public function index(Request $request)
@@ -38,35 +41,28 @@ class SectionController extends Controller
     /** 新規作成画面 */
     public function create(Request $request)
     {
-        $subjects = ['英語', '数学', '国語', '理科', '社会'];
+        $subjects = $this->subjects;
         $currentSubject = $request->subject;
-
         return view('sections.create', compact('subjects', 'currentSubject'));
     }
-
 
     /** 新規作成処理 */
     public function store(Request $request)
     {
         // バリデーション
         $request->validate([
-            'subject' => 'required|in:英語,数学,国語,理科,社会',
+            'subject' => 'required|in:' . implode(',', $this->subjects),
             'number' => 'required|integer',
             'name' => 'required|string',
         ]);
 
         // 新規登録
-        Section::create([
-            'subject' => $request->subject,
-            'number' => $request->number,
-            'name' => $request->name,
-        ]);
+        Section::create($request->only(['subject', 'number', 'name']));
 
         // リダイレクト
-        return to_route('sections.index', ['subject' => $request->subject])->with('success', '新しい単元が追加されました');
+        return to_route('sections.index', ['subject' => $request->subject])
+            ->with('success', '新しい単元が追加されました');
     }
-
-
 
     /** 詳細表示 */
     public function show($id)
@@ -76,15 +72,40 @@ class SectionController extends Controller
         return view('sections.show', compact('section', 'questions'));
     }
 
-
-
     /** 編集画面 */
-    public function edit() {}
+    public function edit($id)
+    {
+        $section = Section::findOrFail($id);
+        $subjects = $this->subjects;
 
+        return view('sections.edit', compact('section', 'subjects'));
+    }
 
     /** 編集処理 */
-    public function update() {}
+    public function update(Request $request, $id)
+    {
+        // バリデーション
+        $request->validate([
+            'subject' => 'required|in:' . implode(',', $this->subjects),
+            'number' => 'required|integer',
+            'name' => 'required|string',
+        ]);
 
-    /** 削除 */
-    public function destroy() {}
+        // 更新処理
+        $section = Section::findOrFail($id);
+        $section->update($request->only(['subject', 'number', 'name']));
+
+        return to_route('sections.show', $section->id)
+            ->with('success', '単元情報を更新しました');
+    }
+
+    /** 削除処理 */
+    public function destroy($id)
+    {
+        $section = Section::findOrFail($id);
+        $section->delete();
+
+        return to_route('sections.index', ['subject' => $section->subject])
+            ->with('success', '単元が削除されました');
+    }
 }

@@ -26,19 +26,28 @@
     <table class="table table-hover table-bordered shadow-sm rounded" style="border-color: #333;">
       <thead>
         <tr>
-          <th scope="col" class="text-center" style="{{ $subjectStyle }}; border-color: #333;">単元番号</th>
-          <th scope="col" style="{{ $subjectStyle }}; border-color: #333;">単元名</th>
-          <th scope="col" class="text-center" style="{{ $subjectStyle }}; border-color: #333;">詳細</th>
+          <th scope="col" class="text-center" style="{{ $subjectStyle }}">単元番号</th>
+          <th scope="col" style="{{ $subjectStyle }}">単元名</th>
+          <th scope="col" class="text-center" style="{{ $subjectStyle }}">詳細</th>
+          <th scope="col" class="text-center" style="{{ $subjectStyle }}">削除</th>
         </tr>
       </thead>
       <tbody>
         @foreach($sections as $section)
         <tr>
-          <td class="text-center font-weight-bold" style="border-color: #333;">{{ $section->number }}</td>
-          <td style="border-color: #333;">{{ $section->name }}</td>
-          <td class="text-center" style="border-color: #333;">
-            <a href="{{ route('sections.show', $section->id) }}"
-              class="btn btn-outline-primary btn-sm shadow-sm">詳細を見る</a>
+          <td class="text-center font-weight-bold">{{ $section->number }}</td>
+          <td>{{ $section->name }}</td>
+          <td class="text-center">
+            <a href="{{ route('sections.show', $section->id) }}" class="btn btn-outline-primary btn-sm shadow-sm">詳細</a>
+          </td>
+          <td class="text-center">
+            {{-- 削除ボタンをフォームで実装 --}}
+            <form action="{{ route('sections.destroy', $section->id) }}" method="POST"
+              onsubmit="return confirm('この単元を削除しますか？');">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="btn btn-outline-danger btn-sm shadow-sm">削除</button>
+            </form>
           </td>
         </tr>
         @endforeach

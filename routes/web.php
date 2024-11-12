@@ -82,23 +82,24 @@ Route::controller(SectionController::class)
     });
 
 /*
-|--------------------------------------------------------------------------
-| Question関連ルート
-|--------------------------------------------------------------------------
-| 質問に関するルート設定
-| 認証が必要で、/questionsに関連したルートをまとめています。
-|--------------------------------------------------------------------------
-*/
+    |--------------------------------------------------------------------------
+    | Question関連ルート
+    |--------------------------------------------------------------------------
+    | 質問に関するルート設定
+    | 認証が必要で、/questionsに関連したルートをまとめています。
+    |--------------------------------------------------------------------------
+    */
+
 Route::controller(QuestionController::class)
     ->middleware('auth')
-    ->prefix('questions')
+    ->prefix('sections/{sectionId}/questions')
     ->name('questions.')
     ->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::get('create', 'create')->name('create');
-        Route::post('store', 'store')->name('store');
-        Route::get('/{id}', 'show')->name('show');
-        Route::get('edit/{id}', 'edit')->name('edit');
-        Route::put('update/{id}', 'update')->name('update');
-        Route::delete('destroy/{id}', 'destroy')->name('destroy');
+        Route::get('/', 'index')->name('index');                    // 質問一覧
+        Route::get('create', 'create')->name('create');             // 新規作成画面
+        Route::post('store', 'store')->name('store');               // 新規作成処理
+        Route::get('/{id}', 'show')->name('show');                  // 詳細表示
+        Route::get('edit/{id}', 'edit')->name('edit');              // 編集画面
+        Route::put('update/{id}', 'update')->name('update');        // 編集処理
+        Route::delete('destroy/{id}', 'destroy')->name('destroy');  // 削除処理
     });
