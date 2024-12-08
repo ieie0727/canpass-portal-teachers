@@ -18,6 +18,7 @@
           <th scope="col">名前</th>
           <th scope="col">メールアドレス</th>
           <th scope="col" class="text-center">ステータス</th>
+          <th scope="col" class="text-center">学習履歴</th>
           <th scope="col" class="text-center">詳細</th>
           <th scope="col" class="text-center">削除</th>
         </tr>
@@ -30,8 +31,13 @@
           <td>{{ $student->email }}</td>
           <td class="text-center">{{ $student->status }}</td>
           <td class="text-center">
+            <a href="{{ route('records.by_student', ['student_id' => $student->id, 'subject' => '英語']) }}"
+              class="btn btn-outline-success btn-sm shadow-sm">学習履歴</a>
+          </td>
+          <td class="text-center">
             <a href="{{ route('students.show', $student->id) }}" class="btn btn-outline-primary btn-sm shadow-sm">詳細</a>
           </td>
+
           <td class="text-center">
             {{-- 削除ボタンをフォームで実装 --}}
             <form action="{{ route('students.destroy', $student->id) }}" method="POST"

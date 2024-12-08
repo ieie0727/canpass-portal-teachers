@@ -21,7 +21,6 @@ class CreateSectionsTable extends Migration
             $table->timestamps();
 
             // 同じ教科内でnumberやnameが重複しないように複合ユニーク制約を設定
-            $table->unique(['subject', 'number']);
             $table->unique(['subject', 'name']);
         });
     }

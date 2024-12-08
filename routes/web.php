@@ -7,6 +7,7 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\RecordController;
 
 // 認証ルート
 Auth::routes();
@@ -95,11 +96,18 @@ Route::controller(QuestionController::class)
     ->prefix('sections/{sectionId}/questions')
     ->name('questions.')
     ->group(function () {
-        Route::get('/', 'index')->name('index');                    // 質問一覧
-        Route::get('create', 'create')->name('create');             // 新規作成画面
-        Route::post('store', 'store')->name('store');               // 新規作成処理
-        Route::get('/{id}', 'show')->name('show');                  // 詳細表示
-        Route::get('edit/{id}', 'edit')->name('edit');              // 編集画面
-        Route::put('update/{id}', 'update')->name('update');        // 編集処理
-        Route::delete('destroy/{id}', 'destroy')->name('destroy');  // 削除処理
+        Route::get('/', 'index')->name('index');
+        Route::get('create', 'create')->name('create');
+        Route::post('store', 'store')->name('store');
+        Route::get('/{id}', 'show')->name('show');
+        Route::get('edit/{id}', 'edit')->name('edit');
+        Route::put('update/{id}', 'update')->name('update');
+        Route::delete('destroy/{id}', 'destroy')->name('destroy');
+    });
+
+
+Route::controller(RecordController::class)
+    ->name('records.')
+    ->group(function () {
+        Route::get('students/{student_id}/records/{subject}', 'byStudent')->name('by_student');
     });

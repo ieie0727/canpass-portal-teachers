@@ -28,7 +28,9 @@
   <div class="d-flex justify-content-between mt-3">
     <div>
       <a href="{{ route('students.index') }}" class="btn btn-secondary me-3">戻る</a>
-      <a href="{{ route('students.edit', $student->id) }}" class="btn btn-primary">編集</a>
+      <a href="{{ route('students.edit', $student->id) }}" class="btn btn-primary me-3">編集</a>
+      <a href="{{ route('records.by_student', ['student_id' => $student->id, 'subject' => '英語']) }}"
+        class="btn btn-success">学習履歴</a>
     </div>
     <form action="{{ route('students.destroy', $student->id) }}" method="POST"
       onsubmit="return confirm('この生徒を削除しますか？');">

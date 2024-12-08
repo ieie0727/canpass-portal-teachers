@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Record;
 
 class Student extends Model
 {
@@ -37,5 +38,10 @@ class Student extends Model
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = bcrypt($value);
+    }
+
+    public function records()
+    {
+        return $this->hasMany(Record::class);
     }
 }
