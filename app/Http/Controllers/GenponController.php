@@ -12,29 +12,29 @@ class GenponController extends Controller
   public function __construct() {}
 
 
-  /** 一覧 */
+  /** 一覧表示 */
   public function index() {}
 
 
-  /** 新規作成画面 */
+  /** 新規画面 */
   public function create() {}
 
 
-  /** 新規作成処理 */
-  public function store() {}
+  /** 新規処理 */
+  public function store(Request $request) {}
 
 
   /** 詳細表示 */
-  public function show() {}
+  public function show($id) {}
 
 
   /** 編集画面 */
-  public function edit() {}
+  public function edit($id) {}
 
 
   /** 編集処理 */
-  public function update() {}
+  public function update(Request $request, $id) {}
 
-  /** 削除 */
-  public function destroy() {}
+  /** 削除処理 */
+  public function destroy($id) {}
 }

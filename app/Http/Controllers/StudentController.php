@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Record;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+
+use App\Models\Record;
+use App\Models\Score;
+use App\Models\Grade;
 
 class StudentController extends Controller
 {
@@ -37,15 +40,18 @@ class StudentController extends Controller
         ]);
 
         // 新規登録
-        Student::create([
+        $student = Student::create([
             'family_name' => $request->family_name,
             'given_name' => $request->given_name,
             'email' => $request->email,
             'birth_date' => $request->birth_date,
             'admission_date' => $request->admission_date,
             'status' => $request->status,
-            'password' => Hash::make($request->password), // パスワードのハッシュ化
+            'password' => Hash::make($request->password),
         ]);
+
+        //新規登録した生徒の「テスト点・内申点」に全部-1を入れる
+        $this->createInitialScoresAndGrades($student->id);
 
         // リダイレクト
         return to_route('students.index')->with('success', '新規生徒を追加しました');
@@ -91,5 +97,48 @@ class StudentController extends Controller
         $student = Student::findOrFail($id);
         $student->delete();
         return redirect()->route('students.index')->with('success', '生徒情報を削除しました。');
+    }
+
+
+    /** サブ関数 */
+    /**  新規登録した生徒の「テスト点・内申点」に全部-1を入れる */
+    public function createInitialScoresAndGrades($studentId)
+    {
+        $subjects = [
+            'japanese',
+            'math',
+            'english',
+            'social',
+            'science',
+            'music',
+            'art',
+            'physical',
+            'industrial',
+        ];
+
+        //各学年ごとに回す
+        for ($grade = 1; $grade <= 3; $grade++) {
+            //定期テストの登録
+            for ($term = 1; $term <= 5; $term++) {
+                $scoreData = [
+                    'student_id' => $studentId,
+                    'grade' => $grade,
+                    'term' => $term,
+                ];
+
+                Score::create($scoreData);
+            }
+
+            //内申点の登録
+            for ($term = 1; $term <= 4; $term++) {
+                $gradeData = [
+                    'student_id' => $studentId,
+                    'grade' => $grade,
+                    'term' => $term,
+                ];
+
+                Grade::create($gradeData);
+            }
+        }
     }
 }

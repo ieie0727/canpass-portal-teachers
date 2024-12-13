@@ -3,14 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Record;
+use App\Models\Score;
+use App\Models\Grade;
 
 class Student extends Model
 {
-    use Notifiable, SoftDeletes;
+    use Notifiable;
 
     protected $fillable = [
         'role',
@@ -43,5 +43,15 @@ class Student extends Model
     public function records()
     {
         return $this->hasMany(Record::class);
+    }
+
+    public function scores()
+    {
+        return $this->hasMany(Score::class);
+    }
+
+    public function grades()
+    {
+        return $this->hasMany(Grade::class);
     }
 }

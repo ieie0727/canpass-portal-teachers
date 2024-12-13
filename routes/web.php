@@ -20,7 +20,7 @@ Route::get('/', [HomeController::class, 'index'])->middleware('auth');
 | Teacher関連ルート
 |--------------------------------------------------------------------------
 | 講師に関するルート設定
-| 認証が必要で、/teachersに関連したルートをまとめています。
+| /teachersに関連したルートをまとめています。
 |--------------------------------------------------------------------------
 */
 Route::controller(TeacherController::class)
@@ -31,7 +31,7 @@ Route::controller(TeacherController::class)
         Route::get('/', 'index')->name('index');
         Route::get('create', 'create')->name('create');
         Route::post('store', 'store')->name('store');
-        Route::get('/{id}', 'show')->name('show');
+        Route::get('{id}', 'show')->name('show');
         Route::get('edit/{id}', 'edit')->name('edit');
         Route::put('update/{id}', 'update')->name('update');
         Route::delete('destroy/{id}', 'destroy')->name('destroy');
@@ -42,7 +42,7 @@ Route::controller(TeacherController::class)
 | Student関連ルート
 |--------------------------------------------------------------------------
 | 生徒に関するルート設定
-| 認証が必要で、/studentsに関連したルートをまとめています。
+| /studentsに関連したルートをまとめています。
 |--------------------------------------------------------------------------
 */
 Route::controller(StudentController::class)
@@ -53,7 +53,7 @@ Route::controller(StudentController::class)
         Route::get('/', 'index')->name('index');
         Route::get('create', 'create')->name('create');
         Route::post('store', 'store')->name('store');
-        Route::get('/{id}', 'show')->name('show');
+        Route::get('{id}', 'show')->name('show');
         Route::get('edit/{id}', 'edit')->name('edit');
         Route::put('update/{id}', 'update')->name('update');
         Route::delete('destroy/{id}', 'destroy')->name('destroy');
@@ -64,7 +64,7 @@ Route::controller(StudentController::class)
 | Section関連ルート
 |--------------------------------------------------------------------------
 | 単元（セクション）に関するルート設定
-| 認証が必要で、/sectionsに関連したルートをまとめています。
+| /sectionsに関連したルートをまとめています。
 |--------------------------------------------------------------------------
 */
 Route::controller(SectionController::class)
@@ -76,20 +76,20 @@ Route::controller(SectionController::class)
         Route::get('/', 'index')->name('index');
         Route::get('create', 'create')->name('create');
         Route::post('store', 'store')->name('store');
-        Route::get('/{id}', 'show')->name('show');
+        Route::get('{id}', 'show')->name('show');
         Route::get('edit/{id}', 'edit')->name('edit');
         Route::put('update/{id}', 'update')->name('update');
         Route::delete('destroy/{id}', 'destroy')->name('destroy');
     });
 
 /*
-    |--------------------------------------------------------------------------
-    | Question関連ルート
-    |--------------------------------------------------------------------------
-    | 質問に関するルート設定
-    | 認証が必要で、/questionsに関連したルートをまとめています。
-    |--------------------------------------------------------------------------
-    */
+|--------------------------------------------------------------------------
+| Question関連ルート
+|--------------------------------------------------------------------------
+| 質問に関するルート設定
+| /questionsに関連したルートをまとめています。
+|--------------------------------------------------------------------------
+*/
 
 Route::controller(QuestionController::class)
     ->middleware('auth')
@@ -99,14 +99,22 @@ Route::controller(QuestionController::class)
         Route::get('/', 'index')->name('index');
         Route::get('create', 'create')->name('create');
         Route::post('store', 'store')->name('store');
-        Route::get('/{id}', 'show')->name('show');
+        Route::get('{id}', 'show')->name('show');
         Route::get('edit/{id}', 'edit')->name('edit');
         Route::put('update/{id}', 'update')->name('update');
         Route::delete('destroy/{id}', 'destroy')->name('destroy');
     });
 
-
+/*
+|--------------------------------------------------------------------------
+| Record関連ルート
+|--------------------------------------------------------------------------
+| 成績や記録に関するルート設定
+| /students/{student_id}/records/に関連したルートを設定しています。
+|-------------------------------------------------------------------------- 
+*/
 Route::controller(RecordController::class)
+    ->middleware('auth')
     ->name('records.')
     ->group(function () {
         Route::get('students/{student_id}/records/{subject}', 'byStudent')->name('by_student');

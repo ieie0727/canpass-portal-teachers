@@ -20,7 +20,6 @@ return new class extends Migration
             $table->enum('status', ['在籍', '休塾', '退塾'])->default('在籍')->index();
             $table->string('password', 255);
             $table->timestamps();
-            $table->softDeletes();
             $table->rememberToken()->nullable();
         });
     }
