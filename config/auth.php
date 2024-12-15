@@ -34,11 +34,6 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Teacher::class, // Teacherモデルを使用
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'teachers',
-        // ],
     ],
 
     /*

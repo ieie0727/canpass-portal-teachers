@@ -2,16 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Model;
-use App\Models\Record;
-use App\Models\Score;
-use App\Models\Grade;
 
-class Student extends Model
+class Student extends Authenticatable
 {
     use Notifiable;
 
+    // 一括代入可能な属性
     protected $fillable = [
         'role',
         'family_name',
@@ -24,32 +22,39 @@ class Student extends Model
         'password',
     ];
 
+    // 非表示にする属性
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    // 認証に使用するカラム名を指定
+    /**
+     * 認証に使用するカラムを指定
+     */
     public function getAuthIdentifierName()
     {
         return 'email';
     }
 
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
-    }
-
+    /**
+     * Recordモデルとのリレーション
+     */
     public function records()
     {
         return $this->hasMany(Record::class);
     }
 
+    /**
+     * Scoreモデルとのリレーション
+     */
     public function scores()
     {
         return $this->hasMany(Score::class);
     }
 
+    /**
+     * Gradeモデルとのリレーション
+     */
     public function grades()
     {
         return $this->hasMany(Grade::class);

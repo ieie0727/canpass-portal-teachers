@@ -8,14 +8,8 @@ use App\Models\Student;
 
 class StudentsSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
-        // サンプルの生徒データを作成
         Student::create([
             'role' => 'student',
             'family_name' => '田中',
@@ -23,6 +17,7 @@ class StudentsSeeder extends Seeder
             'email' => 'taro.tanaka@example.com',
             'birth_date' => '2005-04-01',
             'admission_date' => '2021-04-01',
+            'status' => '在籍',
             'password' => Hash::make('taropass'),
         ]);
 
@@ -33,6 +28,7 @@ class StudentsSeeder extends Seeder
             'email' => 'hanako.sato@example.com',
             'birth_date' => '2006-05-15',
             'admission_date' => '2022-04-01',
+            'status' => '在籍',
             'password' => Hash::make('hanakopass'),
         ]);
     }

@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 class GenponController extends Controller
 //以下だけコピー
-
 {
   /** 初期動作 */
   public function __construct() {}

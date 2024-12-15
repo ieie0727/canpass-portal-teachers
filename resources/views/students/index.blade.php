@@ -18,6 +18,7 @@
           <th scope="col">名前</th>
           <th scope="col">メールアドレス</th>
           <th scope="col" class="text-center">ステータス</th>
+          <th scope="col" class="text-center">学校の成績</th>
           <th scope="col" class="text-center">学習履歴</th>
           <th scope="col" class="text-center">詳細</th>
           <th scope="col" class="text-center">削除</th>
@@ -30,6 +31,10 @@
           <td>{{ $student->family_name }} {{ $student->given_name }}</td>
           <td>{{ $student->email }}</td>
           <td class="text-center">{{ $student->status }}</td>
+          <td class="text-center">
+            <a href="{{ route('schools.index', ['id' => $student->id, 'grade' => '1']) }}"
+              class="btn btn-outline-info btn-sm shadow-sm">学校の成績</a>
+          </td>
           <td class="text-center">
             <a href="{{ route('records.by_student', ['student_id' => $student->id, 'subject' => '英語']) }}"
               class="btn btn-outline-success btn-sm shadow-sm">学習履歴</a>

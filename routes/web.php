@@ -8,6 +8,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\RecordController;
+use App\Http\Controllers\SchoolController;
 
 // 認証ルート
 Auth::routes();
@@ -118,4 +119,20 @@ Route::controller(RecordController::class)
     ->name('records.')
     ->group(function () {
         Route::get('students/{student_id}/records/{subject}', 'byStudent')->name('by_student');
+    });
+
+/*
+|--------------------------------------------------------------------------
+| School関連ルート
+|--------------------------------------------------------------------------
+| 学校関連の情報に関するルート設定
+| /schools に関連したルートをまとめています。
+|--------------------------------------------------------------------------
+*/
+Route::controller(SchoolController::class)
+    ->middleware('auth')
+    ->prefix('schools')
+    ->name('schools.')
+    ->group(function () {
+        Route::get('{id}', 'index')->name('index'); // 一覧表示
     });
