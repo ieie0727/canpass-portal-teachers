@@ -6,9 +6,11 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-use App\Models\Record;
 use App\Models\Score;
 use App\Models\Grade;
+use App\Models\Record;
+use App\Models\Section;
+use App\Models\Question;
 
 class StudentController extends Controller
 {
@@ -98,6 +100,118 @@ class StudentController extends Controller
         $student->delete();
         return redirect()->route('students.index')->with('success', '生徒情報を削除しました。');
     }
+
+
+    public function school(Request $request)
+    {
+        // 基本情報
+        $SCORE_OBJ = [
+            1 => '１学期中間',
+            2 => '１学期期末',
+            3 => '２学期中間',
+            4 => '２学期期末',
+            5 => '学年末',
+        ];
+
+        $GRADE_OBJ = [
+            1 => '１学期',
+            2 => '２学期',
+            3 => '３学期',
+            4 => '学年',
+        ];
+
+        $SUBJECT_NAMES = [
+            '国語',
+            '数学',
+            '英語',
+            '社会',
+            '理科',
+            '音楽',
+            '美術',
+            '保体',
+            '技家',
+        ];
+
+        $SUBJECT_COLUMNS = [
+            'japanese',
+            'math',
+            'english',
+            'social',
+            'science',
+            'music',
+            'art',
+            'physical',
+            'industrial',
+        ];
+
+        //生徒情報
+        $student_id = $request->student_id;
+        $student = Student::find($student_id);
+        $grade = $request->query('grade');
+
+        // 学年が指定されていない場合の処理
+        if (!$grade) {
+            return view('schools.index', [
+                'message' => '学年を指定してください。',
+                'scores' => [],
+                'grades' => []
+            ]);
+        }
+
+        //定期テストの点数取得
+        $scores = Score::where('student_id', $student_id)
+            ->where('grade', $grade)
+            ->get();
+
+        //内申点取得
+        $grades = Grade::where('student_id', $student_id)
+            ->where('grade', $grade)
+            ->get();
+
+        //画面表示
+        return view('students.school', compact('student', 'scores', 'grades', 'SCORE_OBJ', 'GRADE_OBJ', 'SUBJECT_NAMES', 'SUBJECT_COLUMNS'));
+    }
+
+
+    public function record_subject(Request $request, $student_id)
+    {
+        // 生徒情報を取得
+        $student = Student::findOrFail($student_id);
+
+        // 指定された科目に関連するすべての単元を取得
+        $subject = $request->subject;
+        $sections = Section::where('subject', $subject)->orderBy('number')->get();
+
+        // 各単元に対して生徒の解答記録を取得
+        $records = Record::where('student_id', $student_id)
+            ->whereIn('section_id', $sections->pluck('id'))
+            ->get();
+
+        return view('students.record_subject', compact('student', 'sections', 'records', 'subject'));
+    }
+
+    public function record_detail($student_id, $section_id)
+    {
+        // 生徒情報を取得
+        $student = Student::findOrFail($student_id);
+
+        // 単元情報を取得
+        $section = Section::findOrFail($section_id);
+
+        // 単元に関連する質問を取得
+        $questions = Question::where('section_id', $section_id)->get();
+
+        // 生徒の記録を取得
+        $record = Record::where('student_id', $student_id)
+            ->where('section_id', $section_id)
+            ->first();
+
+        // ビューにデータを渡す
+        return view('students.record_detail', compact('student', 'section', 'questions', 'record'));
+    }
+
+
+
 
 
     /** サブ関数 */

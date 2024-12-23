@@ -24,7 +24,7 @@
           <a class="nav-link text-white" href="{{ route('students.index') }}">生徒情報</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" href="{{ route('sections.home') }}">学習管理</a>
+          <a class="nav-link text-white" href="{{ route('sections.home') }}">テスト管理</a>
         </li>
 
         <!-- ユーザー情報 -->

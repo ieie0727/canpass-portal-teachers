@@ -32,10 +32,10 @@ Route::controller(TeacherController::class)
         Route::get('/', 'index')->name('index');
         Route::get('create', 'create')->name('create');
         Route::post('store', 'store')->name('store');
-        Route::get('{id}', 'show')->name('show');
-        Route::get('edit/{id}', 'edit')->name('edit');
-        Route::put('update/{id}', 'update')->name('update');
-        Route::delete('destroy/{id}', 'destroy')->name('destroy');
+        Route::get('{teacher_id}', 'show')->name('show');
+        Route::get('edit/{teacher_id}', 'edit')->name('edit');
+        Route::put('update/{teacher_id}', 'update')->name('update');
+        Route::delete('destroy/{teacher_id}', 'destroy')->name('destroy');
     });
 
 /*
@@ -54,10 +54,13 @@ Route::controller(StudentController::class)
         Route::get('/', 'index')->name('index');
         Route::get('create', 'create')->name('create');
         Route::post('store', 'store')->name('store');
-        Route::get('{id}', 'show')->name('show');
-        Route::get('edit/{id}', 'edit')->name('edit');
-        Route::put('update/{id}', 'update')->name('update');
-        Route::delete('destroy/{id}', 'destroy')->name('destroy');
+        Route::get('{student_id}', 'show')->name('show');
+        Route::get('edit/{student_id}', 'edit')->name('edit');
+        Route::put('update/{student_id}', 'update')->name('update');
+        Route::delete('destroy/{student_id}', 'destroy')->name('destroy')->middleware('can:isAdmin');
+        Route::get('school/{student_id}', 'school')->name('school');
+        Route::get('record/{student_id}/subject/{subject}', 'record_subject')->name('record_subject');
+        Route::get('record/{student_id}/section/{section_id}', 'record_detail')->name('record_detail');
     });
 
 /*
@@ -77,10 +80,10 @@ Route::controller(SectionController::class)
         Route::get('/', 'index')->name('index');
         Route::get('create', 'create')->name('create');
         Route::post('store', 'store')->name('store');
-        Route::get('{id}', 'show')->name('show');
-        Route::get('edit/{id}', 'edit')->name('edit');
-        Route::put('update/{id}', 'update')->name('update');
-        Route::delete('destroy/{id}', 'destroy')->name('destroy');
+        Route::get('{section_id}', 'show')->name('show');
+        Route::get('edit/{section_id}', 'edit')->name('edit');
+        Route::put('update/{section_id}', 'update')->name('update');
+        Route::delete('destroy/{section_id}', 'destroy')->name('destroy');
     });
 
 /*
@@ -91,48 +94,16 @@ Route::controller(SectionController::class)
 | /questionsに関連したルートをまとめています。
 |--------------------------------------------------------------------------
 */
-
 Route::controller(QuestionController::class)
     ->middleware('auth')
-    ->prefix('sections/{sectionId}/questions')
+    ->prefix('sections/{section_id}/questions')
     ->name('questions.')
     ->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('create', 'create')->name('create');
         Route::post('store', 'store')->name('store');
-        Route::get('{id}', 'show')->name('show');
-        Route::get('edit/{id}', 'edit')->name('edit');
-        Route::put('update/{id}', 'update')->name('update');
-        Route::delete('destroy/{id}', 'destroy')->name('destroy');
-    });
-
-/*
-|--------------------------------------------------------------------------
-| Record関連ルート
-|--------------------------------------------------------------------------
-| 成績や記録に関するルート設定
-| /students/{student_id}/records/に関連したルートを設定しています。
-|-------------------------------------------------------------------------- 
-*/
-Route::controller(RecordController::class)
-    ->middleware('auth')
-    ->name('records.')
-    ->group(function () {
-        Route::get('students/{student_id}/records/{subject}', 'byStudent')->name('by_student');
-    });
-
-/*
-|--------------------------------------------------------------------------
-| School関連ルート
-|--------------------------------------------------------------------------
-| 学校関連の情報に関するルート設定
-| /schools に関連したルートをまとめています。
-|--------------------------------------------------------------------------
-*/
-Route::controller(SchoolController::class)
-    ->middleware('auth')
-    ->prefix('schools')
-    ->name('schools.')
-    ->group(function () {
-        Route::get('{id}', 'index')->name('index'); // 一覧表示
+        Route::get('{question_id}', 'show')->name('show');
+        Route::get('edit/{question_id}', 'edit')->name('edit');
+        Route::put('update/{question_id}', 'update')->name('update');
+        Route::delete('destroy/{question_id}', 'destroy')->name('destroy');
     });

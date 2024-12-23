@@ -28,8 +28,9 @@
   <div class="d-flex justify-content-between mt-3">
     <div>
       <a href="{{ route('students.index') }}" class="btn btn-secondary me-3">生徒一覧に戻る</a>
-      <a href="{{ route('schools.index', ['id' => $student->id, 'grade'=>1]) }}" class="btn btn-info me-3">学校の成績</a>
-      <a href="{{ route('records.by_student', ['student_id' => $student->id, 'subject' => '英語']) }}"
+      <a href="{{ route('students.school', ['student_id' => $student->id, 'grade'=>1]) }}"
+        class="btn btn-info me-3">学校の成績</a>
+      <a href="{{ route('students.record_subject', ['student_id' => $student->id, 'subject' => '英語']) }}"
         class="btn btn-success">学習履歴</a>
     </div>
     <div>

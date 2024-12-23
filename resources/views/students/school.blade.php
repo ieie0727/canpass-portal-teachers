@@ -11,7 +11,7 @@
   <!-- 名前表示と学年プルダウン -->
   <div class="d-flex justify-content-between align-items-end">
     <h2>{{ $student->family_name }} {{ $student->given_name }}さんの成績</h2>
-    <form method="GET" action="{{ route('schools.index', ['id' => $student->id]) }}" class="mb-2">
+    <form method="GET" action="{{ route('students.school', ['student_id' => $student->id]) }}" class="mb-2">
       <select name="grade" class="form-select" onchange="this.form.submit()" style="width: auto; margin-top: 8px;">
         <option value="1" {{ request('grade')=='1' ? 'selected' : '' }}>１年生</option>
         <option value="2" {{ request('grade')=='2' ? 'selected' : '' }}>２年生</option>
@@ -79,7 +79,7 @@
   </div>
 
   <div class="mt-3">
-    <a href="{{ route('students.show', ['id'=>$student->id]) }}" class="btn btn-secondary me-3">生徒情報に戻る</a>
+    <a href="{{ route('students.show', ['student_id'=>$student->id]) }}" class="btn btn-secondary me-3">生徒情報に戻る</a>
   </div>
 
   @endif

@@ -32,11 +32,11 @@
           <td>{{ $student->email }}</td>
           <td class="text-center">{{ $student->status }}</td>
           <td class="text-center">
-            <a href="{{ route('schools.index', ['id' => $student->id, 'grade' => '1']) }}"
+            <a href="{{ route('students.school', ['student_id' => $student->id, 'grade' => '1']) }}"
               class="btn btn-outline-info btn-sm shadow-sm">学校の成績</a>
           </td>
           <td class="text-center">
-            <a href="{{ route('records.by_student', ['student_id' => $student->id, 'subject' => '英語']) }}"
+            <a href="{{ route('students.record_subject', ['student_id' => $student->id, 'subject' => '英語']) }}"
               class="btn btn-outline-success btn-sm shadow-sm">学習履歴</a>
           </td>
           <td class="text-center">

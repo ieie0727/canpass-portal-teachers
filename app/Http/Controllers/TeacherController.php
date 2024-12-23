@@ -24,15 +24,16 @@ class TeacherController extends Controller
     /** 新規作成処理 */
     public function store(Request $request)
     {
+        //バリデーション
         $validated = $request->validate([
             'family_name'      => 'required|string|max:255',
             'given_name'       => 'required|string|max:255',
             'role'             => 'required|in:teacher,admin',
             'status'           => 'required|in:稼働,休職,退職',
             'email_company'    => 'required|email|unique:teachers,email_company',
-            'phone_company'    => 'nullable|string|max:20',
+            'phone_company'    => 'nullable|string|max:20|unique:teachers,phone_company',
             'email_private'    => 'nullable|email|unique:teachers,email_private',
-            'phone_private'    => 'nullable|string|max:20',
+            'phone_private'    => 'nullable|string|max:20|unique:teachers,phone_private',
             'birth_date'       => 'required|date',
             'hire_date'        => 'nullable|date',
             'retirement_date'  => 'nullable|date|after_or_equal:hire_date',
@@ -40,13 +41,29 @@ class TeacherController extends Controller
             'password'         => 'required|string|min:8|confirmed',
         ]);
 
+        // パラメータが渡されなかった場合はnullにする(nullableのカラムのみ)
+        $fieldsToNullify = [
+            'phone_company',
+            'email_private',
+            'phone_private',
+            'hire_date',
+            'retirement_date',
+            'meeting_url',
+        ];
+        foreach ($fieldsToNullify as $field) {
+            if (!isset($validated[$field])) {
+                $validated[$field] = null;
+            }
+        }
+
         // パスワードをハッシュ化
         $validated['password'] = Hash::make($validated['password']);
 
         Teacher::create($validated);
 
-        return redirect()->route('teachers.index')->with('success', '講師を追加しました。');
+        return to_route('teachers.index')->with('success', '講師を追加しました。');
     }
+
 
     /** 詳細表示 */
     public function show($id)
