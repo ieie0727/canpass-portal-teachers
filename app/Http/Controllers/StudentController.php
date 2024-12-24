@@ -37,6 +37,7 @@ class StudentController extends Controller
             'email' => 'required|email|unique:students,email',
             'birth_date' => 'required|date',
             'admission_date' => 'required|date',
+            'withdrawal_date' => 'nullable|date',
             'status' => 'required|in:在籍,休塾,退塾',
             'password' => 'required|string|min:8|confirmed',
         ]);
@@ -48,6 +49,7 @@ class StudentController extends Controller
             'email' => $request->email,
             'birth_date' => $request->birth_date,
             'admission_date' => $request->admission_date,
+            'withdrawal_date' => $request->withdrawal_date,
             'status' => $request->status,
             'password' => Hash::make($request->password),
         ]);
@@ -83,6 +85,7 @@ class StudentController extends Controller
             'email' => 'required|email|unique:students,email,' . $id,
             'birth_date' => 'required|date',
             'admission_date' => 'required|date',
+            'withdrawal_date' => 'nullable|date',
             'status' => 'required|in:在籍,休塾,退塾',
         ]);
 

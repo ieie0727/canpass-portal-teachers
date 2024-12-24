@@ -18,6 +18,7 @@ class CreateSectionsTable extends Migration
             $table->enum('subject', ['英語', '数学', '国語', '理科', '社会']);
             $table->bigInteger('number'); // sectionに対するナンバー
             $table->string('name')->unique(); // セクション名にユニーク制約
+            $table->integer('passing_score')->default(0); // 合格点
             $table->timestamps();
 
             // 同じ教科内でnumberやnameが重複しないように複合ユニーク制約を設定

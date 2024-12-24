@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Question;
-use App\Models\Section;
 
 class QuestionsSeeder extends Seeder
 {
@@ -15,23 +14,320 @@ class QuestionsSeeder extends Seeder
      */
     public function run()
     {
-        // 各セクションに対して3つの質問を追加
-        $sections = Section::all();
+        $questions = [
+            // 英語: 基本文型, 時制
+            [
+                'section_id' => 1,
+                'question_text' => '次の文の文型を選びなさい: "She gave him a book."',
+                'choice1' => 'S+V',
+                'choice2' => 'S+V+O',
+                'choice3' => 'S+V+IO+DO',
+                'choice4' => 'S+V+C',
+                'correct_answer' => 3,
+                'number' => 1,
+            ],
+            [
+                'section_id' => 1,
+                'question_text' => '次の文の主語を選びなさい: "The dog is barking loudly."',
+                'choice1' => 'dog',
+                'choice2' => 'The dog',
+                'choice3' => 'barking',
+                'choice4' => 'loudly',
+                'correct_answer' => 2,
+                'number' => 2,
+            ],
+            [
+                'section_id' => 1,
+                'question_text' => '次の文の補語を選びなさい: "He became a doctor."',
+                'choice1' => 'He',
+                'choice2' => 'became',
+                'choice3' => 'a doctor',
+                'choice4' => 'None',
+                'correct_answer' => 3,
+                'number' => 3,
+            ],
+            [
+                'section_id' => 2,
+                'question_text' => '次の文の時制を選びなさい: "She is studying now."',
+                'choice1' => '現在形',
+                'choice2' => '現在進行形',
+                'choice3' => '過去形',
+                'choice4' => '未来形',
+                'correct_answer' => 2,
+                'number' => 1,
+            ],
+            [
+                'section_id' => 2,
+                'question_text' => '次の文を正しい時制に直しなさい: "He (go) to school every day."',
+                'choice1' => 'goes',
+                'choice2' => 'is going',
+                'choice3' => 'went',
+                'choice4' => 'has gone',
+                'correct_answer' => 1,
+                'number' => 2,
+            ],
+            [
+                'section_id' => 2,
+                'question_text' => '次の文の正しい否定形を選びなさい: "She likes apples."',
+                'choice1' => 'She not likes apples.',
+                'choice2' => 'She don’t like apples.',
+                'choice3' => 'She doesn’t like apples.',
+                'choice4' => 'She isn’t liking apples.',
+                'correct_answer' => 3,
+                'number' => 3,
+            ],
 
-        foreach ($sections as $section) {
-            for ($i = 1; $i <= 3; $i++) {
-                Question::create([
-                    'section_id' => $section->id,
-                    'question_text' => "これは{$section->name}のサンプル質問 {$i} です。",
-                    'question_image' => null, // 画像を使用しない場合はnull
-                    'number' => $i, // 質問番号は1から3まで
-                    'choice1' => '選択肢1',
-                    'choice2' => '選択肢2',
-                    'choice3' => '選択肢3',
-                    'choice4' => '選択肢4',
-                    'correct_answer' => rand(1, 4), // 1～4のランダムな正解
-                ]);
-            }
+            // 数学: 方程式, 関数
+            [
+                'section_id' => 6,
+                'question_text' => '次の方程式を解きなさい: 2x + 3 = 7',
+                'choice1' => 'x = 1',
+                'choice2' => 'x = 2',
+                'choice3' => 'x = 3',
+                'choice4' => 'x = 4',
+                'correct_answer' => 2,
+                'number' => 1,
+            ],
+            [
+                'section_id' => 6,
+                'question_text' => '次の方程式の解を選びなさい: x^2 - 4 = 0',
+                'choice1' => 'x = 2',
+                'choice2' => 'x = -2',
+                'choice3' => 'x = ±2',
+                'choice4' => 'x = 0',
+                'correct_answer' => 3,
+                'number' => 2,
+            ],
+            [
+                'section_id' => 6,
+                'question_text' => '次の方程式を因数分解しなさい: x^2 + 3x + 2 = 0',
+                'choice1' => '(x+1)(x+2)',
+                'choice2' => '(x-1)(x-2)',
+                'choice3' => '(x+1)(x-2)',
+                'choice4' => '(x-1)(x+2)',
+                'correct_answer' => 1,
+                'number' => 3,
+            ],
+            [
+                'section_id' => 7,
+                'question_text' => '次の関数のグラフの形状を選びなさい: y = x^2',
+                'choice1' => '直線',
+                'choice2' => '放物線',
+                'choice3' => '円',
+                'choice4' => '双曲線',
+                'correct_answer' => 2,
+                'number' => 1,
+            ],
+            [
+                'section_id' => 7,
+                'question_text' => '関数 y = 2x + 1 の傾きを選びなさい。',
+                'choice1' => '1',
+                'choice2' => '2',
+                'choice3' => '1/2',
+                'choice4' => '0',
+                'correct_answer' => 2,
+                'number' => 2,
+            ],
+            [
+                'section_id' => 7,
+                'question_text' => '次の関数の切片を選びなさい: y = -3x + 4',
+                'choice1' => '-3',
+                'choice2' => '4',
+                'choice3' => '-4',
+                'choice4' => '3',
+                'correct_answer' => 2,
+                'number' => 3,
+            ],
+
+            // 国語: 古文文法, 漢字と語彙
+            [
+                'section_id' => 11,
+                'question_text' => '次の助動詞の意味を選びなさい: 「花咲けり」',
+                'choice1' => '過去',
+                'choice2' => '完了',
+                'choice3' => '推量',
+                'choice4' => '意志',
+                'correct_answer' => 1,
+                'number' => 1,
+            ],
+            [
+                'section_id' => 11,
+                'question_text' => '次の文の主語を選びなさい: 「月の都より使ひ来たり。」',
+                'choice1' => '月',
+                'choice2' => '都',
+                'choice3' => '使ひ',
+                'choice4' => '来たり',
+                'correct_answer' => 3,
+                'number' => 2,
+            ],
+            [
+                'section_id' => 11,
+                'question_text' => '次の単語の活用形を選びなさい: 「思ふ」',
+                'choice1' => '未然形',
+                'choice2' => '連用形',
+                'choice3' => '終止形',
+                'choice4' => '連体形',
+                'correct_answer' => 3,
+                'number' => 3,
+            ],
+            [
+                'section_id' => 12,
+                'question_text' => '次の漢字の読みを選びなさい: 「挨拶」',
+                'choice1' => 'あいさつ',
+                'choice2' => 'あいさし',
+                'choice3' => 'あいだち',
+                'choice4' => 'あいせつ',
+                'correct_answer' => 1,
+                'number' => 1,
+            ],
+            [
+                'section_id' => 12,
+                'question_text' => '次の漢字の意味を選びなさい: 「謙虚」',
+                'choice1' => '偉そうな態度',
+                'choice2' => '控えめな態度',
+                'choice3' => '攻撃的な態度',
+                'choice4' => '無関心な態度',
+                'correct_answer' => 2,
+                'number' => 2,
+            ],
+            [
+                'section_id' => 12,
+                'question_text' => '次の熟語の反対語を選びなさい: 「明朗」',
+                'choice1' => '不透明',
+                'choice2' => '暗黙',
+                'choice3' => '陰気',
+                'choice4' => '静寂',
+                'correct_answer' => 3,
+                'number' => 3,
+            ],
+
+            // 社会: 日本史, 世界史
+            [
+                'section_id' => 21,
+                'question_text' => '次の歴史人物の業績を選びなさい: 「聖徳太子」',
+                'choice1' => '遣隋使の派遣',
+                'choice2' => '平等院鳳凰堂の建立',
+                'choice3' => '鎖国政策の開始',
+                'choice4' => '江戸幕府の成立',
+                'correct_answer' => 1,
+                'number' => 1,
+            ],
+            [
+                'section_id' => 21,
+                'question_text' => '次の出来事が起きた時代を選びなさい: 「大化の改新」',
+                'choice1' => '奈良時代',
+                'choice2' => '飛鳥時代',
+                'choice3' => '平安時代',
+                'choice4' => '江戸時代',
+                'correct_answer' => 2,
+                'number' => 2,
+            ],
+            [
+                'section_id' => 21,
+                'question_text' => '次の文化財が建てられた時代を選びなさい: 「法隆寺」',
+                'choice1' => '飛鳥時代',
+                'choice2' => '奈良時代',
+                'choice3' => '平安時代',
+                'choice4' => '鎌倉時代',
+                'correct_answer' => 1,
+                'number' => 3,
+            ],
+            [
+                'section_id' => 22,
+                'question_text' => '次の出来事が起きた国を選びなさい: 「フランス革命」',
+                'choice1' => 'イギリス',
+                'choice2' => 'アメリカ',
+                'choice3' => 'フランス',
+                'choice4' => 'ロシア',
+                'correct_answer' => 3,
+                'number' => 1,
+            ],
+            [
+                'section_id' => 22,
+                'question_text' => '次の人物の出身国を選びなさい: 「ナポレオン」',
+                'choice1' => 'イタリア',
+                'choice2' => 'フランス',
+                'choice3' => 'スペイン',
+                'choice4' => 'ポルトガル',
+                'correct_answer' => 2,
+                'number' => 2,
+            ],
+            [
+                'section_id' => 22,
+                'question_text' => '次の出来事が起きた年代を選びなさい: 「アメリカ独立宣言」',
+                'choice1' => '1776年',
+                'choice2' => '1789年',
+                'choice3' => '1492年',
+                'choice4' => '1945年',
+                'correct_answer' => 1,
+                'number' => 3,
+            ],
+
+            // 理科: 力学, 化学反応
+            [
+                'section_id' => 16,
+                'question_text' => '次の物体の速度を計算しなさい: 距離30mを10秒で移動した。',
+                'choice1' => '3m/s',
+                'choice2' => '30m/s',
+                'choice3' => '0.3m/s',
+                'choice4' => '300m/s',
+                'correct_answer' => 1,
+                'number' => 1,
+            ],
+            [
+                'section_id' => 16,
+                'question_text' => '次の法則を選びなさい: 「物体に力が加わらないとき、物体は静止または等速直線運動を続ける。」',
+                'choice1' => '作用反作用の法則',
+                'choice2' => '慣性の法則',
+                'choice3' => '運動の法則',
+                'choice4' => '万有引力の法則',
+                'correct_answer' => 2,
+                'number' => 2,
+            ],
+            [
+                'section_id' => 16,
+                'question_text' => '次のエネルギー保存則に関する選択肢から正しいものを選びなさい。',
+                'choice1' => 'エネルギーは常に増加する。',
+                'choice2' => 'エネルギーは保存されない。',
+                'choice3' => 'エネルギーは形を変えて保存される。',
+                'choice4' => 'エネルギーは物質と同じ性質を持つ。',
+                'correct_answer' => 3,
+                'number' => 3,
+            ],
+            [
+                'section_id' => 17,
+                'question_text' => '次の化学反応式が表す反応を選びなさい: 2H2 + O2 → 2H2O',
+                'choice1' => '中和反応',
+                'choice2' => '酸化反応',
+                'choice3' => '還元反応',
+                'choice4' => '燃焼反応',
+                'correct_answer' => 4,
+                'number' => 1,
+            ],
+            [
+                'section_id' => 17,
+                'question_text' => '次の反応が起きる条件を選びなさい: 「鉄が酸素と結びつき錆びる」',
+                'choice1' => '酸素のみ存在する',
+                'choice2' => '水分が存在する',
+                'choice3' => '高温である',
+                'choice4' => '真空状態',
+                'correct_answer' => 2,
+                'number' => 2,
+            ],
+            [
+                'section_id' => 17,
+                'question_text' => '次の化学反応式が示す反応に関与する物質量を選びなさい: H2 + Cl2 → 2HCl',
+                'choice1' => '1:1',
+                'choice2' => '2:1',
+                'choice3' => '1:2',
+                'choice4' => '2:2',
+                'correct_answer' => 1,
+                'number' => 3,
+            ],
+        ];
+
+        foreach ($questions as $question) {
+            Question::create($question);
         }
     }
 }

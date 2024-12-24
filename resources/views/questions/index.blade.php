@@ -9,10 +9,10 @@
     </div>
     <div>
       {{-- 問題追加ボタン --}}
-      <a href="{{ route('questions.create', ['sectionId' => $section->id]) }}" class="btn btn-success me-2">問題追加</a>
+      <a href="{{ route('questions.create', ['section_id' => $section->id]) }}" class="btn btn-success me-3">問題追加</a>
 
       {{-- 単元編集ボタン --}}
-      <a href="{{ route('sections.edit', $section->id) }}" class="btn btn-primary me-2">単元編集</a>
+      <a href="{{ route('sections.edit', $section->id) }}" class="btn btn-primary me-3">単元編集</a>
 
       {{-- 単元削除ボタン --}}
       <form action="{{ route('sections.destroy', $section->id) }}" method="POST" style="display:inline;"
@@ -27,7 +27,7 @@
   {{-- 質問一覧テーブル --}}
   @if($questions->isNotEmpty())
   <div class="table-responsive">
-    <table class="table table-hover table-bordered shadow-sm rounded">
+    <table class="table table-hover table-bordered shadow-sm rounded align-middle">
       <thead class="table-light">
         <tr>
           <th scope="col" class="text-center">番号</th>
@@ -40,14 +40,14 @@
         @foreach($questions as $question)
         <tr>
           <td class="text-center">{{ $question->number }}</td>
-          <td>{{ $question->question_text }}</td>
+          <td style="white-space: pre-wrap;">{{ $question->question_text }}</td>
           <td class="text-center">
-            <a href="{{ route('questions.show', ['sectionId'=>$section->id,'id'=>$question->id]) }}"
+            <a href="{{ route('questions.show', ['section_id'=>$section->id,'question_id'=>$question->id]) }}"
               class="btn btn-outline-primary btn-sm shadow-sm">詳細</a>
           </td>
           <td class="text-center">
             {{-- 削除ボタンをフォームで実装 --}}
-            <form action="{{ route('questions.destroy',  ['sectionId'=>$section->id,'id'=>$question->id]) }}"
+            <form action="{{ route('questions.destroy',  ['section_id'=>$section->id,'question_id'=>$question->id]) }}"
               method="POST" onsubmit="return confirm('この問題を削除しますか？');">
               @csrf
               @method('DELETE')

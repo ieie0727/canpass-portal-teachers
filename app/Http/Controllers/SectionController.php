@@ -33,17 +33,25 @@ class SectionController extends Controller
 
         // subjectが指定されている場合のみフィルタリングを適用
         $subject = $request->subject;
-        $sections = Section::where('subject', $subject)->get();
+
+        // セクションデータを取得し、questions_countを追加
+        $sections = Section::withCount('questions')
+            ->where('subject', $subject)
+            ->orderBy('number', 'asc')
+            ->get();
 
         return view('sections.index', compact('subject', 'sections'));
     }
+
+
 
     /** 新規作成画面 */
     public function create(Request $request)
     {
         $subjects = $this->subjects;
         $currentSubject = $request->subject;
-        return view('sections.create', compact('subjects', 'currentSubject'));
+        $sections = Section::where('subject', $currentSubject)->get();
+        return view('sections.create', compact('subjects', 'currentSubject', 'sections'));
     }
 
     /** 新規作成処理 */
@@ -54,10 +62,11 @@ class SectionController extends Controller
             'subject' => 'required|in:' . implode(',', $this->subjects),
             'number' => 'required|integer',
             'name' => 'required|string',
+            'passing_score' => 'required|integer',
         ]);
 
         // 新規登録
-        Section::create($request->only(['subject', 'number', 'name']));
+        Section::create($request->only(['subject', 'number', 'name', 'passing_score']));
 
         // リダイレクト
         return to_route('sections.index', ['subject' => $request->subject])
@@ -65,20 +74,22 @@ class SectionController extends Controller
     }
 
     /** 詳細表示 */
-    public function show($id)
+    public function show($section_id)
     {
-        $section = Section::findOrFail($id);
-        $questions = Question::where('section_id', $id)->get();
+        $section = Section::findOrFail($section_id);
+        $questions = Question::where('section_id', $section_id)
+            ->orderBy('number', 'asc')->get();
         return view('sections.show', compact('section', 'questions'));
     }
 
     /** 編集画面 */
-    public function edit($id)
+    public function edit($section_id)
     {
-        $section = Section::findOrFail($id);
+        $section = Section::findOrFail($section_id);
         $subjects = $this->subjects;
+        $questions = Question::where('section_id', $section_id)->get();
 
-        return view('sections.edit', compact('section', 'subjects'));
+        return view('sections.edit', compact('section', 'subjects', 'questions'));
     }
 
     /** 編集処理 */
@@ -89,11 +100,12 @@ class SectionController extends Controller
             'subject' => 'required|in:' . implode(',', $this->subjects),
             'number' => 'required|integer',
             'name' => 'required|string',
+            'passing_score' => 'required|integer',
         ]);
 
         // 更新処理
         $section = Section::findOrFail($id);
-        $section->update($request->only(['subject', 'number', 'name']));
+        $section->update($request->only(['subject', 'number', 'name', 'passing_score']));
 
         return to_route('sections.show', $section->id)
             ->with('success', '単元情報を更新しました');

@@ -7,84 +7,119 @@
   <form action="{{ route('students.store') }}" method="POST">
     @csrf
 
-    {{-- 名前 --}}
-    <div class="form-group mb-3">
-      <label for="family_name">姓</label>
-      <input type="text" name="family_name" id="family_name"
-        class="form-control @error('family_name') is-invalid @enderror" value="{{ old('family_name') }}" required>
-      @error('family_name')
-      <div class="invalid-feedback">{{ $message }}</div>
-      @enderror
-    </div>
+    <table class="table">
+      <tbody>
+        <!-- 氏名 -->
+        <tr>
+          <th scope="row" class="fs-5">氏名<span class="text-danger">*</span></th>
+          <td class="d-flex">
+            <div class="me-2 flex-grow-1">
+              <input type="text" class="form-control @error('family_name') is-invalid @enderror" id="family_name"
+                name="family_name" placeholder="名字" value="{{ old('family_name') }}" required>
+              @error('family_name')
+              <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
+            </div>
+            <div class="flex-grow-1">
+              <input type="text" class="form-control @error('given_name') is-invalid @enderror" id="given_name"
+                name="given_name" placeholder="名前" value="{{ old('given_name') }}" required>
+              @error('given_name')
+              <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
+            </div>
+          </td>
+        </tr>
 
-    <div class="form-group mb-3">
-      <label for="given_name">名</label>
-      <input type="text" name="given_name" id="given_name"
-        class="form-control @error('given_name') is-invalid @enderror" value="{{ old('given_name') }}" required>
-      @error('given_name')
-      <div class="invalid-feedback">{{ $message }}</div>
-      @enderror
-    </div>
+        <!-- メールアドレス -->
+        <tr>
+          <th scope="row" class="fs-5">メールアドレス<span class="text-danger">*</span></th>
+          <td>
+            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email"
+              value="{{ old('email') }}" required>
+            @error('email')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+          </td>
+        </tr>
 
-    {{-- メールアドレス --}}
-    <div class="form-group mb-3">
-      <label for="email">メールアドレス</label>
-      <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror"
-        value="{{ old('email') }}" required>
-      @error('email')
-      <div class="invalid-feedback">{{ $message }}</div>
-      @enderror
-    </div>
+        <!-- 生年月日 -->
+        <tr>
+          <th scope="row" class="fs-5">生年月日<span class="text-danger">*</span></th>
+          <td>
+            <input type="date" class="form-control @error('birth_date') is-invalid @enderror" id="birth_date"
+              name="birth_date" value="{{ old('birth_date') }}" max="9999-12-31" required>
+            @error('birth_date')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+          </td>
+        </tr>
 
-    {{-- 生年月日 --}}
-    <div class="form-group mb-3">
-      <label for="birth_date">生年月日</label>
-      <input type="date" name="birth_date" id="birth_date"
-        class="form-control @error('birth_date') is-invalid @enderror" value="{{ old('birth_date') }}" required>
-      @error('birth_date')
-      <div class="invalid-feedback">{{ $message }}</div>
-      @enderror
-    </div>
+        <!-- 入塾日 -->
+        <tr>
+          <th scope="row" class="fs-5">入塾日<span class="text-danger">*</span></th>
+          <td>
+            <input type="date" class="form-control @error('admission_date') is-invalid @enderror" id="admission_date"
+              name="admission_date" value="{{ old('admission_date', date('Y-m-d')) }}" max="9999-12-31" required>
+            @error('admission_date')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+          </td>
+        </tr>
 
-    {{-- 入塾日 --}}
-    <div class="form-group mb-3">
-      <label for="admission_date">入塾日</label>
-      <input type="date" name="admission_date" id="admission_date"
-        class="form-control @error('admission_date') is-invalid @enderror" value="{{ old('admission_date') }}" required>
-      @error('admission_date')
-      <div class="invalid-feedback">{{ $message }}</div>
-      @enderror
-    </div>
+        <!-- 退塾日 -->
+        <tr>
+          <th scope="row" class="fs-5">退塾日</th>
+          <td>
+            <input type="date" class="form-control @error('withdrawal_date') is-invalid @enderror" id="withdrawal_date"
+              name="withdrawal_date" value="{{ old('withdrawal_date') }}" max="9999-12-31">
+            @error('withdrawal_date')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+          </td>
+        </tr>
 
-    {{-- ステータス --}}
-    <div class="form-group mb-3">
-      <label for="status">ステータス</label>
-      <select name="status" id="status" class="form-control @error('status') is-invalid @enderror" required>
-        <option value="在籍" {{ old('status')=='在籍' ? 'selected' : '' }}>在籍</option>
-        <option value="休塾" {{ old('status')=='休塾' ? 'selected' : '' }}>休塾</option>
-        <option value="退塾" {{ old('status')=='退塾' ? 'selected' : '' }}>退塾</option>
-      </select>
-      @error('status')
-      <div class="invalid-feedback">{{ $message }}</div>
-      @enderror
-    </div>
+        <!-- ステータス -->
+        <tr>
+          <th scope="row" class="fs-5">ステータス<span class="text-danger">*</span></th>
+          <td>
+            <select class="form-select @error('status') is-invalid @enderror" id="status" name="status" required>
+              <option value="在籍" {{ old('status')=='在籍' ? 'selected' : '' }}>在籍</option>
+              <option value="休塾" {{ old('status')=='休塾' ? 'selected' : '' }}>休塾</option>
+              <option value="退塾" {{ old('status')=='退塾' ? 'selected' : '' }}>退塾</option>
+            </select>
+            @error('status')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+          </td>
+        </tr>
 
-    {{-- パスワード --}}
-    <div class="form-group mb-3">
-      <label for="password">パスワード</label>
-      <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror"
-        required>
-      @error('password')
-      <div class="invalid-feedback">{{ $message }}</div>
-      @enderror
-    </div>
+        <!-- パスワード -->
+        <tr>
+          <th scope="row" class="fs-5">パスワード<span class="text-danger">*</span></th>
+          <td>
+            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"
+              name="password" required>
+            @error('password')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+          </td>
+        </tr>
 
-    <div class="form-group mb-3">
-      <label for="password_confirmation">パスワード（確認）</label>
-      <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
-    </div>
+        <!-- パスワード確認 -->
+        <tr>
+          <th scope="row" class="fs-5">パスワード確認<span class="text-danger">*</span></th>
+          <td>
+            <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"
+              id="password_confirmation" name="password_confirmation" required>
+            @error('password_confirmation')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
-    <div class="d-flex">
+    <div class="d-flex mt-4">
       <a href="{{ route('students.index') }}" class="btn btn-secondary me-3">キャンセル</a>
       <button type="submit" class="btn btn-primary">登録</button>
     </div>

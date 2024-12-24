@@ -7,8 +7,6 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\QuestionController;
-use App\Http\Controllers\RecordController;
-use App\Http\Controllers\SchoolController;
 
 // 認証ルート
 Auth::routes();

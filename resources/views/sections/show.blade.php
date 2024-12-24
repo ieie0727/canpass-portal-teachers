@@ -3,16 +3,18 @@
 @section('content')
 <div class="container">
   {{-- 上部: 教科名・単元名と編集・問題追加・単元削除ボタン --}}
-  <div class="d-flex justify-content-between align-items-center mb-4">
+  <div class="d-flex justify-content-between align-items-center mb-1">
     <div>
       <h2>{{ $section->subject }} - {{ $section->number }}. {{ $section->name }}</h2>
+      {{-- 現在の問題数と合格点 --}}
+      <p class="text-muted mb-0">問題数: {{ $questions->count() }} | 合格点: {{ $section->passing_score }}</p>
     </div>
     <div>
       {{-- 問題追加ボタン --}}
-      <a href="{{ route('questions.create', ['sectionId' => $section->id]) }}" class="btn btn-success me-2">問題追加</a>
+      <a href="{{ route('questions.create', ['section_id' => $section->id]) }}" class="btn btn-success me-3">問題追加</a>
 
       {{-- 単元編集ボタン --}}
-      <a href="{{ route('sections.edit', $section->id) }}" class="btn btn-primary me-2">単元編集</a>
+      <a href="{{ route('sections.edit', $section->id) }}" class="btn btn-primary me-3">単元編集</a>
 
       {{-- 単元削除ボタン --}}
       <form action="{{ route('sections.destroy', $section->id) }}" method="POST" style="display:inline;"
@@ -39,15 +41,15 @@
       <tbody>
         @foreach($questions as $question)
         <tr>
-          <td class="text-center">{{ $question->number }}</td>
-          <td>{{ $question->question_text }}</td>
-          <td class="text-center">
-            <a href="{{ route('questions.show', ['sectionId'=>$section->id,'id'=>$question->id]) }}"
+          <td class="text-center align-middle">{{ $question->number }}</td>
+          <td class="align-middle" style="white-space: pre-wrap;">{{ $question->question_text }}</td>
+          <td class="text-center align-middle">
+            <a href="{{ route('questions.show', ['section_id'=>$section->id,'question_id'=>$question->id]) }}"
               class="btn btn-outline-primary btn-sm shadow-sm">詳細</a>
           </td>
-          <td class="text-center">
+          <td class="text-center align-middle">
             {{-- 削除ボタンをフォームで実装 --}}
-            <form action="{{ route('questions.destroy',  ['sectionId'=>$section->id,'id'=>$question->id]) }}"
+            <form action="{{ route('questions.destroy', ['section_id'=>$section->id,'question_id'=>$question->id]) }}"
               method="POST" onsubmit="return confirm('この問題を削除しますか？');">
               @csrf
               @method('DELETE')

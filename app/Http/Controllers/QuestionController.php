@@ -20,10 +20,11 @@ class QuestionController extends Controller
     }
 
     /** 新規作成画面 */
-    public function create($sectionId)
+    public function create($section_id)
     {
-        $section = Section::findOrFail($sectionId); // セクションの確認
-        return view('questions.create', compact('section'));
+        $section = Section::findOrFail($section_id);
+        $questions = Question::where('section_id', $section_id)->get();
+        return view('questions.create', compact('section', 'questions'));
     }
 
     /** 新規作成処理 */
@@ -77,31 +78,38 @@ class QuestionController extends Controller
     }
 
     /** 編集処理 */
-    public function update(Request $request, $sectionId, $id)
+    public function update(Request $request, $section_id, $question_id)
     {
         // バリデーション
         $request->validate([
             'question_text' => 'required|string',
-            'question_image' => 'nullable|image|max:2048',
             'number' => 'required|integer',
-            'choice1' => 'required|string|max:255',
-            'choice2' => 'required|string|max:255',
-            'choice3' => 'required|string|max:255',
-            'choice4' => 'required|string|max:255',
-            'correct_answer' => 'required|integer|between:1,4',
+            'choice1' => 'required|string',
+            'choice2' => 'required|string',
+            'choice3' => 'required|string',
+            'choice4' => 'required|string',
+            'correct_answer' => 'required|integer|in:1,2,3,4',
+            'question_image' => 'nullable|image|max:2048',
         ]);
 
-        $question = Question::where('section_id', $sectionId)->findOrFail($id);
+        $question = Question::findOrFail($question_id);
 
-        // 画像を更新する場合は古い画像を削除して保存
-        if ($request->hasFile('question_image')) {
-            if ($question->question_image) {
-                Storage::disk('public')->delete($question->question_image);
-            }
-            $question->question_image = $request->file('question_image')->store('questions', 'public');
+        // 画像削除の処理
+        if ($request->has('delete_question_image') && $question->question_image) {
+            Storage::delete('public/' . $question->question_image);
+            $question->question_image = null;
         }
 
-        // データを更新
+        // アップロードされた新しい画像を保存
+        if ($request->hasFile('question_image')) {
+            if ($question->question_image) {
+                Storage::delete('public/' . $question->question_image); // 古い画像を削除
+            }
+            $path = $request->file('question_image')->store('questions', 'public');
+            $question->question_image = $path;
+        }
+
+        // 他のフィールドを更新
         $question->update([
             'question_text' => $request->question_text,
             'number' => $request->number,
@@ -112,9 +120,10 @@ class QuestionController extends Controller
             'correct_answer' => $request->correct_answer,
         ]);
 
-        return to_route('questions.show', ['sectionId' => $sectionId, 'id' => $question->id])
-            ->with('success', '問題が更新されました');
+        return redirect()->route('questions.show', ['section_id' => $section_id, 'question_id' => $question->id])
+            ->with('success', '問題を更新しました');
     }
+
 
     /** 削除 */
     public function destroy($sectionId, $id)

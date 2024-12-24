@@ -35,7 +35,7 @@ class TeacherController extends Controller
             'email_private'    => 'nullable|email|unique:teachers,email_private',
             'phone_private'    => 'nullable|string|max:20|unique:teachers,phone_private',
             'birth_date'       => 'required|date',
-            'hire_date'        => 'nullable|date',
+            'hire_date'        => 'required|date',
             'retirement_date'  => 'nullable|date|after_or_equal:hire_date',
             'meeting_url'      => 'nullable|url',
             'password'         => 'required|string|min:8|confirmed',
@@ -46,7 +46,6 @@ class TeacherController extends Controller
             'phone_company',
             'email_private',
             'phone_private',
-            'hire_date',
             'retirement_date',
             'meeting_url',
         ];
@@ -66,23 +65,23 @@ class TeacherController extends Controller
 
 
     /** 詳細表示 */
-    public function show($id)
+    public function show($teahcer_id)
     {
-        $teacher = Teacher::findOrFail($id);
+        $teacher = Teacher::findOrFail($teahcer_id);
         return view('teachers.show', compact('teacher'));
     }
 
     /** 編集画面 */
-    public function edit($id)
+    public function edit($teahcer_id)
     {
-        $teacher = Teacher::findOrFail($id);
+        $teacher = Teacher::findOrFail($teahcer_id);
         return view('teachers.edit', compact('teacher'));
     }
 
     /** 編集処理 */
-    public function update(Request $request, $id)
+    public function update(Request $request, $teahcer_id)
     {
-        $teacher = Teacher::findOrFail($id);
+        $teacher = Teacher::findOrFail($teahcer_id);
 
         $validated = $request->validate([
             'family_name'      => 'required|string|max:255',
@@ -101,13 +100,13 @@ class TeacherController extends Controller
 
         $teacher->update($validated);
 
-        return redirect()->route('teachers.show', $teacher->id)->with('success', '講師情報を更新しました。');
+        return redirect()->route('teachers.show', $teahcer_id)->with('success', '講師情報を更新しました。');
     }
 
     /** 削除 */
-    public function destroy($id)
+    public function destroy($teahcer_id)
     {
-        $teacher = Teacher::findOrFail($id);
+        $teacher = Teacher::findOrFail($teahcer_id);
         $teacher->delete();
 
         return redirect()->route('teachers.index')->with('success', '講師情報を削除しました。');

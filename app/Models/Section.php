@@ -13,6 +13,7 @@ class Section extends Model
         'subject',
         'number',
         'name',
+        'passing_score',
     ];
 
     /**

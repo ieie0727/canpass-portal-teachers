@@ -8,8 +8,8 @@
 
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <form action="{{ route('questions.update', ['sectionId' => $section->id, 'id' => $question->id]) }}" method="POST"
-        enctype="multipart/form-data">
+      <form action="{{ route('questions.update', ['section_id' => $section->id, 'question_id' => $question->id]) }}"
+        method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -30,6 +30,10 @@
           @if($question->question_image)
           <div class="mb-2">
             <img src="{{ asset('storage/' . $question->question_image) }}" alt="問題画像" class="img-fluid">
+            <div class="form-check mt-2">
+              <input type="checkbox" name="delete_question_image" id="delete_question_image" class="form-check-input">
+              <label for="delete_question_image" class="form-check-label">画像を削除する</label>
+            </div>
           </div>
           @endif
           <input type="file" name="question_image" id="question_image"
@@ -38,6 +42,7 @@
           <div class="invalid-feedback">{{ $message }}</div>
           @enderror
         </div>
+
 
         {{-- 問題番号 --}}
         <div class="form-group mb-3">
@@ -78,7 +83,7 @@
 
     <div class="d-flex align-items-center">
       {{-- キャンセルボタン --}}
-      <a href="{{ route('questions.show', ['sectionId' => $section->id, 'id' => $question->id]) }}"
+      <a href="{{ route('questions.show', ['section_id' => $section->id, 'question_id' => $question->id]) }}"
         class="btn btn-secondary me-3">キャンセル</a>
 
       {{-- 更新ボタン --}}

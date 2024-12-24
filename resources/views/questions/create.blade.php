@@ -4,13 +4,13 @@
 <div class="container">
   {{-- 上部: 質問作成タイトル --}}
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>{{ $section->subject }} - {{ $section->number }}. {{ $section->name }}</h2>
+    <h2>{{ $section->subject }} - {{ $section->number }}.{{ $section->name }}</h2>
   </div>
 
   {{-- 質問作成フォーム --}}
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <form action="{{ route('questions.store', ['sectionId' => $section->id]) }}" method="POST"
+      <form action="{{ route('questions.store', ['section_id' => $section->id]) }}" method="POST"
         enctype="multipart/form-data">
         @csrf
 
@@ -18,7 +18,7 @@
         <div class="form-group mb-3">
           <label for="number">問題番号</label>
           <input type="number" name="number" id="number" class="form-control @error('number') is-invalid @enderror"
-            value="{{ old('number') }}" required>
+            value="{{ old('number', $questions->count() + 1) }}" required>
           @error('number')
           <div class="invalid-feedback">{{ $message }}</div>
           @enderror
@@ -28,7 +28,7 @@
         <div class="form-group mb-3">
           <label for="question_text">問題</label>
           <textarea name="question_text" id="question_text"
-            class="form-control @error('question_text') is-invalid @enderror"
+            class="form-control @error('question_text') is-invalid @enderror" style="white-space: pre-wrap;"
             required>{{ old('question_text') }}</textarea>
           @error('question_text')
           <div class="invalid-feedback">{{ $message }}</div>
@@ -44,8 +44,6 @@
           <div class="invalid-feedback">{{ $message }}</div>
           @enderror
         </div>
-
-
 
         {{-- 選択肢 --}}
         @for ($i = 1; $i <= 4; $i++) <div class="form-group mb-3">
@@ -74,8 +72,10 @@
     </div>
 
     {{-- 作成ボタン --}}
-    <button type="submit" class="btn btn-primary">作成</button>
-    <a href="{{ route('sections.show', ['id' => $section->id]) }}" class="btn btn-secondary">キャンセル</a>
+    <div class="d-flex">
+      <a href="{{ route('sections.show', ['section_id' => $section->id]) }}" class="btn btn-secondary me-3">キャンセル</a>
+      <button type="submit" class="btn btn-primary me-3">作成</button>
+    </div>
     </form>
   </div>
 </div>

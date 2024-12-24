@@ -2,21 +2,20 @@
 
 @section('content')
 <div class="container">
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>{{ $section->subject }} - {{ $section->number }}. {{ $section->name }} - 問題No.{{ $question->number }}</h2>
+  <div class="d-flex justify-content-between align-items-center">
+    <h2>{{ $section->subject }} - {{ $section->number }}. {{ $section->name }}</h2>
   </div>
 
-  <div class="card shadow-sm mb-4">
+  <div class="card shadow-sm mb-3">
     <div class="card-body">
-      <h5 class="card-title">問題</h5>
-      <p class="card-text">{{ $question->question_text }}</p>
+      <h5 class="card-title"><strong>問題No.{{ $question->number }}</strong></h5>
+      <p class="card-text" style="white-space: pre-wrap;">{{ $question->question_text }}</p>
+
 
       @if($question->question_image)
       <div class="mb-3">
         <img src="{{ asset('storage/' . $question->question_image) }}" alt="質問画像" class="img-fluid">
       </div>
-      @else
-      <p>画像がありません。</p>
       @endif
 
       <h5 class="card-title mt-4">選択肢</h5>
@@ -36,16 +35,18 @@
   </div>
 
   <div class="d-flex justify-content-between">
-    {{-- 問題一覧に戻るボタン --}}
-    <a href="{{ route('questions.index', ['sectionId' => $section->id]) }}" class="btn btn-secondary">問題一覧に戻る</a>
+    <div>
+      {{-- 問題一覧に戻るボタン --}}
+      <a href="{{ route('questions.index', ['section_id' => $section->id]) }}"
+        class="btn btn-secondary me-3">問題一覧に戻る</a>
+      {{-- 編集ボタン --}}
+      <a href="{{ route('questions.edit', ['section_id' => $section->id, 'question_id' => $question->id]) }}"
+        class="btn btn-primary me-3">編集</a>
+    </div>
 
     <div>
-      {{-- 編集ボタン --}}
-      <a href="{{ route('questions.edit', ['sectionId' => $section->id, 'id' => $question->id]) }}"
-        class="btn btn-primary me-2">編集</a>
-
       {{-- 削除ボタン --}}
-      <form action="{{ route('questions.destroy', ['sectionId' => $section->id, 'id' => $question->id]) }}"
+      <form action="{{ route('questions.destroy', ['section_id' => $section->id, 'question_id' => $question->id]) }}"
         method="POST" style="display:inline;" onsubmit="return confirm('この質問を削除しますか？');">
         @csrf
         @method('DELETE')

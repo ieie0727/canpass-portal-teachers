@@ -2,7 +2,15 @@
 
 @section('content')
 <div class="container">
-  <h3 class="mb-3">{{ $student->family_name }} {{ $student->given_name }}さんの詳細情報</h3>
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h3 class="mb-0">{{ $student->family_name }} {{ $student->given_name }}さんの詳細情報</h3>
+    <div>
+      <a href="{{ route('students.school', ['student_id' => $student->id, 'grade'=>1]) }}"
+        class="btn btn-info me-3">学校の成績</a>
+      <a href="{{ route('students.record_subject', ['student_id' => $student->id, 'subject' => '英語']) }}"
+        class="btn btn-success">学習履歴</a>
+    </div>
+  </div>
 
   <table class="table table-bordered">
     <tbody>
@@ -26,18 +34,14 @@
   </table>
 
   <div class="d-flex justify-content-between mt-3">
+    <!-- 左サイドのボタン -->
     <div>
       <a href="{{ route('students.index') }}" class="btn btn-secondary me-3">生徒一覧に戻る</a>
-      <a href="{{ route('students.school', ['student_id' => $student->id, 'grade'=>1]) }}"
-        class="btn btn-info me-3">学校の成績</a>
-      <a href="{{ route('students.record_subject', ['student_id' => $student->id, 'subject' => '英語']) }}"
-        class="btn btn-success">学習履歴</a>
+      <a href="{{ route('students.edit', $student->id) }}" class="btn btn-primary me-3">編集する</a>
     </div>
-    <div>
-      {{-- 編集ボタン --}}
-      <a href="{{ route('students.edit', $student->id) }}" class="btn btn-primary me-3">編集</a>
 
-      {{-- 削除ボタン --}}
+    <!-- 右サイドのボタン -->
+    <div>
       <form action="{{ route('students.destroy', $student->id) }}" method="POST" class="d-inline"
         onsubmit="return confirm('この生徒を削除しますか？');">
         @csrf
