@@ -43,7 +43,7 @@
                     </div>
                 </div>
 
-                {{-- 面談管理 --}}
+                {{--
                 <div class="col-md-6 mb-4">
                     <div class="card text-center shadow-sm card-hover border-primary">
                         <div class="card-body">
@@ -53,6 +53,7 @@
                         </div>
                     </div>
                 </div>
+                --}}
             </div>
         </div>
     </div>

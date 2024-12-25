@@ -10,11 +10,11 @@ use Illuminate\Support\Facades\Storage;
 class QuestionController extends Controller
 {
     /** 一覧 */
-    public function index($sectionId)
+    public function index($section_id)
     {
         // 指定されたセクションに関連する質問を取得
-        $section = Section::findOrFail($sectionId);
-        $questions = Question::where('section_id', $sectionId)->get();
+        $section = Section::findOrFail($section_id);
+        $questions = Question::where('section_id', $section_id)->get();
 
         return view('questions.index', compact('section', 'questions'));
     }
@@ -28,7 +28,7 @@ class QuestionController extends Controller
     }
 
     /** 新規作成処理 */
-    public function store(Request $request, $sectionId)
+    public function store(Request $request, $section_id)
     {
         // バリデーション
         $request->validate([
@@ -44,7 +44,7 @@ class QuestionController extends Controller
 
         // 質問の作成
         Question::create([
-            'section_id' => $sectionId,
+            'section_id' => $section_id,
             'question_text' => $request->question_text,
             'question_image' => $request->file('question_image')?->store('questions', 'public'), // 画像保存
             'number' => $request->number,
@@ -55,24 +55,24 @@ class QuestionController extends Controller
             'correct_answer' => $request->correct_answer,
         ]);
 
-        return to_route('questions.index', ['sectionId' => $sectionId])
+        return to_route('questions.index', ['section_id' => $section_id])
             ->with('success', '新しい問題が追加されました');
     }
 
     /** 詳細表示 */
-    public function show($sectionId, $id)
+    public function show($section_id, $id)
     {
-        $section = Section::findOrFail($sectionId);
-        $question = Question::where('section_id', $sectionId)->findOrFail($id);
+        $section = Section::findOrFail($section_id);
+        $question = Question::where('section_id', $section_id)->findOrFail($id);
 
         return view('questions.show', compact('section', 'question'));
     }
 
     /** 編集画面 */
-    public function edit($sectionId, $id)
+    public function edit($section_id, $id)
     {
-        $section = Section::findOrFail($sectionId);
-        $question = Question::where('section_id', $sectionId)->findOrFail($id);
+        $section = Section::findOrFail($section_id);
+        $question = Question::where('section_id', $section_id)->findOrFail($id);
 
         return view('questions.edit', compact('section', 'question'));
     }
@@ -126,9 +126,9 @@ class QuestionController extends Controller
 
 
     /** 削除 */
-    public function destroy($sectionId, $id)
+    public function destroy($section_id, $id)
     {
-        $question = Question::where('section_id', $sectionId)->findOrFail($id);
+        $question = Question::where('section_id', $section_id)->findOrFail($id);
 
         // 画像がある場合は削除
         if ($question->question_image) {
@@ -137,7 +137,7 @@ class QuestionController extends Controller
 
         $question->delete();
 
-        return to_route('sections.show', $sectionId)
+        return to_route('sections.show', $section_id)
             ->with('success', '問題が削除されました');
     }
 }

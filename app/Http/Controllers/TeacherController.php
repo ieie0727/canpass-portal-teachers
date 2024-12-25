@@ -11,7 +11,7 @@ class TeacherController extends Controller
     /** 一覧表示 */
     public function index()
     {
-        $teachers = Teacher::all();
+        $teachers = Teacher::withTrashed()->get();
         return view('teachers.index', compact('teachers'))->with('success', session('success'));
     }
 
@@ -24,7 +24,7 @@ class TeacherController extends Controller
     /** 新規作成処理 */
     public function store(Request $request)
     {
-        //バリデーション
+        // バリデーション
         $validated = $request->validate([
             'family_name'      => 'required|string|max:255',
             'given_name'       => 'required|string|max:255',
@@ -63,25 +63,24 @@ class TeacherController extends Controller
         return to_route('teachers.index')->with('success', '講師を追加しました。');
     }
 
-
     /** 詳細表示 */
-    public function show($teahcer_id)
+    public function show($teacher_id)
     {
-        $teacher = Teacher::findOrFail($teahcer_id);
+        $teacher = Teacher::withTrashed()->findOrFail($teacher_id);
         return view('teachers.show', compact('teacher'));
     }
 
     /** 編集画面 */
-    public function edit($teahcer_id)
+    public function edit($teacher_id)
     {
-        $teacher = Teacher::findOrFail($teahcer_id);
+        $teacher = Teacher::findOrFail($teacher_id);
         return view('teachers.edit', compact('teacher'));
     }
 
     /** 編集処理 */
-    public function update(Request $request, $teahcer_id)
+    public function update(Request $request, $teacher_id)
     {
-        $teacher = Teacher::findOrFail($teahcer_id);
+        $teacher = Teacher::findOrFail($teacher_id);
 
         $validated = $request->validate([
             'family_name'      => 'required|string|max:255',
@@ -100,13 +99,14 @@ class TeacherController extends Controller
 
         $teacher->update($validated);
 
-        return redirect()->route('teachers.show', $teahcer_id)->with('success', '講師情報を更新しました。');
+        return redirect()->route('teachers.show', $teacher_id)->with('success', '講師情報を更新しました。');
     }
 
     /** 削除 */
-    public function destroy($teahcer_id)
+    public function destroy($teacher_id)
     {
-        $teacher = Teacher::findOrFail($teahcer_id);
+        $teacher = Teacher::findOrFail($teacher_id);
+        $teacher->update(['status' => "退職"]);
         $teacher->delete();
 
         return redirect()->route('teachers.index')->with('success', '講師情報を削除しました。');

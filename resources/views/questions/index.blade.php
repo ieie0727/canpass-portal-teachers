@@ -6,6 +6,8 @@
   <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
       <h2>{{ $section->subject }} - {{ $section->number }}. {{ $section->name }}</h2>
+      {{-- 現在の問題数と合格点 --}}
+      <p class="text-muted mb-0">問題数: {{ $questions->count() }} | 合格点: {{ $section->passing_score }}</p>
     </div>
     <div>
       {{-- 問題追加ボタン --}}

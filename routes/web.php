@@ -12,7 +12,12 @@ use App\Http\Controllers\QuestionController;
 Auth::routes();
 
 // ホーム画面のルート（認証が必要）
-Route::get('/', [HomeController::class, 'index'])->middleware('auth');
+Route::middleware('auth')->group(function () {
+    Route::get('/', [HomeController::class, 'home'])->name('home');
+    Route::get('/user/show', [HomeController::class, 'userShow'])->name('users.show');
+    Route::get('/user/edit', [HomeController::class, 'userEdit'])->name('users.edit');
+    Route::put('/user/update', [HomeController::class, 'userUpdate'])->name('users.update');
+});
 
 /*
 |--------------------------------------------------------------------------

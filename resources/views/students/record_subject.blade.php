@@ -39,6 +39,7 @@
           <th class="text-center">番号</th>
           <th>単元名</th>
           <th class="text-center">問題数</th>
+          <th class="text-center">合格点</th>
           <th class="text-center">正解数</th>
           <th class="text-center">結果</th>
           <th class="text-center">詳細</th>
@@ -57,6 +58,7 @@
           <td>{{ $section->number }}</td>
           <td>{{ $section->name }}</td>
           <td>{{ $questionCount }}</td>
+          <td>{{ $section->passing_score }}</td>
           <td>{{ $correctCount }}</td>
           <td>
             @if($record)
