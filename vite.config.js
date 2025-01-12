@@ -11,4 +11,13 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    build: {
+        manifest: true,
+        outDir: 'public/build', // ビルド出力先を指定
+        rollupOptions: {
+            input: {
+                app: 'resources/js/app.js', // エントリーファイル
+            },
+        },
+    },
 });
