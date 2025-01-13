@@ -2,9 +2,12 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "vite build && mv public\\build\\.vite\\manifest.json public\\build\\manifest.json",
+        "build": "vite build && mv public/build/.vite/manifest.json public/build/manifest.json",
         "dev": "vite",
         "heroku-postbuild": "npm run build"
+    },
+    "engines": {
+        "node": ">=16.x"
     },
     "devDependencies": {
         "@popperjs/core": "^2.11.6",
