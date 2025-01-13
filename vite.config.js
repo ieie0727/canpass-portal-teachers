@@ -13,10 +13,16 @@ export default defineConfig({
     ],
     build: {
         manifest: true,
-        outDir: 'public/build', // ビルド出力先を指定
+        outDir: 'public/build', // ビルド出力先
+        assetsDir: '', // アセットを`.vite`ディレクトリではなく直下に配置
         rollupOptions: {
             input: {
-                app: 'resources/js/app.js', // エントリーファイル
+                app: 'resources/js/app.js', // メインのエントリーファイル
+                styles: 'resources/sass/app.scss', // SCSSファイル
+            },
+            output: {
+                entryFileNames: '[name]-[hash].js',
+                assetFileNames: '[name]-[hash][extname]',
             },
         },
     },
