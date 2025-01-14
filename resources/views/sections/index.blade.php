@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>{{ $sections->first()->subject ?? '教科' }}の単元一覧</h2>
+    <h2>{{ $subject }}の単元一覧</h2>
     {{-- 単元作成ボタン --}}
     <a href="{{ route('sections.create', ['subject' => $subject]) }}" class="btn btn-primary shadow-sm">単元作成</a>
   </div>
@@ -17,7 +17,7 @@
   '社会' => 'background-color: #e2d6f8 !important;', // 薄い紫
   '理科' => 'background-color: #ffe5b4 !important;', // 薄いオレンジ
   ];
-  $subjectStyle = $headerColors[$sections->first()->subject ?? '英語'] ?? 'background-color: #f8f9fa !important;';
+  $subjectStyle = $headerColors[$subject ?? '英語'] ?? 'background-color: #f8f9fa !important;';
   @endphp
 
   {{-- セクションがある場合はテーブルで一覧表示 --}}

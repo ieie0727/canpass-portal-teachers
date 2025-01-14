@@ -38,25 +38,11 @@
                     @enderror
                 </div>
 
-                <!-- ログイン状態を維持するチェックボックス -->
-                <div class="form-check mb-3">
-                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember')
-                        ? 'checked' : '' }}>
-                    <label class="form-check-label" for="remember">
-                        {{ __('ログインしたままにする') }}
-                    </label>
-                </div>
-
-                <!-- ログインボタンとリンク -->
+                <!-- ログインボタン -->
                 <div class="d-grid gap-2">
                     <button type="submit" class="btn btn-primary">
                         {{ __('ログイン') }}
                     </button>
-                    @if (Route::has('password.request'))
-                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                        {{ __('パスワードをお忘れですか？') }}
-                    </a>
-                    @endif
                 </div>
             </form>
         </div>
