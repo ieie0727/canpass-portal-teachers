@@ -36,8 +36,8 @@
                 <div class="col-md-6 mb-4">
                     <div class="card text-center shadow-sm card-hover border-primary">
                         <div class="card-body">
-                            <h5 class="card-title">学習管理</h5>
-                            <p class="card-text">教科ごとの小テスト作成を行います。</p>
+                            <h5 class="card-title">テスト管理</h5>
+                            <p class="card-text">教科ごとの小テスト作成・管理を行います。</p>
                             <a href="{{ route('sections.home') }}" class="btn btn-outline-primary">学習管理へ</a>
                         </div>
                     </div>
